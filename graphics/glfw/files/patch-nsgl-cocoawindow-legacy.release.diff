@@ -1,0 +1,35 @@
+--- src/nsgl_context.m.orig
++++ src/nsgl_context.m
+@@ -212,11 +212,7 @@ GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
+         ADD_ATTRIB(kCGLPFASupportsAutomaticGraphicsSwitching);
+     }
+
+-    if (ctxconfig->major >= 4)
+-    {
+-        SET_ATTRIB(NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion4_1Core);
+-    }
+-    else if (ctxconfig->major >= 3)
++    if (ctxconfig->major >= 3)
+     {
+         SET_ATTRIB(NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core);
+     }
+--- src/cocoa_window.m.orig
++++ src/cocoa_window.m
+@@ -28,7 +28,7 @@
+
+ #if defined(_GLFW_COCOA)
+
+-#import <QuartzCore/CAMetalLayer.h>
++#import <QuartzCore/CAOpenGLLayer.h>
+
+ #include <float.h>
+ #include <string.h>
+@@ -1979,7 +1979,7 @@ VkResult _glfwCreateWindowSurfaceCocoa(VkInstance instance,
+     @autoreleasepool {
+
+     // NOTE: Create the layer here as makeBackingLayer should not return nil
+-    window->ns.layer = [CAMetalLayer layer];
++    window->ns.layer = [CAOpenGLLayer layer];
+     if (!window->ns.layer)
+     {
+         _glfwInputError(GLFW_PLATFORM_ERROR,

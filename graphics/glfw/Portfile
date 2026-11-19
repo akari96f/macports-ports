@@ -106,6 +106,11 @@ if {${os.platform} eq "darwin" && ${os.major} < 11} {
 
         patchfiles-append patch-CMakeLists.txt.release.diff
 
+        # 14 is failing on buildmaster, while 15+ is fine.
+        if {${os.platform} eq "darwin" && (${os.major} == 13 || ${os.major} == 14)} {
+            patchfiles-append patch-nsgl-cocoawindow-legacy.release.diff
+        }
+
     } else {
 
         # devel
@@ -126,6 +131,10 @@ if {${os.platform} eq "darwin" && ${os.major} < 11} {
         # patch to fix install directory for cmake files and docs
 
         patchfiles-append patch-CMakeLists.txt.devel.diff
+
+        if {${os.platform} eq "darwin" && (${os.major} == 13 || ${os.major} == 14)} {
+            patchfiles-append patch-nsgl-cocoawindow-legacy.devel.diff
+        }
 
         # because I messed up a version as "202105623-52d8347d_0", which
         # because of the messed up date is always greater than a correctly
